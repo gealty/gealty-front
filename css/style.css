@@ -1,0 +1,15 @@
+html{
+    height: 100%;
+}
+
+body{
+    height: 100%;
+}
+
+header{
+    height: 50px;
+}
+
+#map{
+   height: calc(100vh - 50px);
+}
