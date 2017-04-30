@@ -41,12 +41,19 @@
                             <div class="collapse navbar-collapse navbar-right">
                                 <form class="navbar-form navbar-left" role="search">
                                     <div class="form-group">
-                                        <div id="pais" class="input-group">
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
-                                            <select id="date" name="year" required="required" class="form-control">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                            <select id="year" name="year" required="required" class="form-control">
                                                 <option value="1">1 mes</option>
-                                                <!--<option value="3">3 meses</option>
-                                                <option value="6">6 meses</option>-->
+                                            </select>
+                                        </div>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-globe"></i></span>
+                                            <select id="stamen" name="stamen" required="required" class="form-control">
+                                                <option value="0">< Seleccionar Terreno ></option>
+                                                <option value="toner">Toner</option>
+                                                <option value="terrain">Terrain</option>
+                                                <option value="watercolor">Watercolor</option>
                                             </select>
                                         </div>
                                     </div>
@@ -60,7 +67,7 @@
     </header>
 
     <div id="map" class="container-fluid">
-        <div id="activeModal" class="container absolute" style="height: 100%">hola soy pedro</div>
+        <div id="activeModal" class="container absolute"></div>
     </div>
 
     <div id="myModal" class="modal fade" role="dialog">
@@ -74,6 +81,7 @@
                 </div>
                 <div class="modal-body">
                     <input type="search" id="search" onchange="sendSeedAndSearch(false)" class="input-sm"/>
+                    <div class="result"></div>
                 </div>
                 <div class="modal-footer">
                     <button disabled id="sendSeed" type="button" class="btn btn-success" data-dismiss="modal" onclick="sendSeedAndSearch(true)">CULTIVAR</button>

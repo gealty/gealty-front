@@ -53,13 +53,22 @@ header{
 }
 .help{
     bottom: 120px;
-    right: 10px;
+    left: 10px;
 }
 .closest-point{
     bottom: 75px;
-    right: 10px;
+    left: 10px;
 }
 .geo{
     bottom: 30px;
-    right: 10px;
+    left: 10px;
+}
+/* Modal */
+.modal-content {
+    margin-top: 100px;
+}
+#activeModal {
+    width: 100%;
+    height: 100%;
+    padding: 0 40px;
 }

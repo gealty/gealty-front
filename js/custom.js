@@ -9,13 +9,10 @@ var map = L.map('map').setView([geo['lat'], geo['lng']], zoom);
 $(document).ready(function () {
     initMap();
 
-    rainLayer();
-
     $("#help").click(function () {
         console.log('help');
     });
     $("#water").click(function () {
-        getPrecipitation();
         console.log('water');
     });
     $("#geo").click(function () {
@@ -23,7 +20,13 @@ $(document).ready(function () {
     });
     $( "#selectYear" ).change(function() {
         var temp = $(this).val();
-        console.log('year: ' + temp)
+        console.log('year: ' + temp);
+    });
+    $( "#stamen" ).change(function() {
+        var temp = $(this).val();
+        var layer = new L.StamenTileLayer(temp);
+        map.addLayer(layer);
+        console.log('stamen: ' + temp);
     });
 });
 
@@ -34,16 +37,9 @@ function initMap() {
         '| <a href="https://github.com/gealty" target="_blank" title="Gealty Team">Gealty Team</a>'
     }).addTo(map);
 
-  /*  var layer = new L.StamenTileLayer("terrain");
-    map.addLayer(layer);*/
-
-    // L.tileLayer('https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_CityLights_2012/default/2012-07-09/GoogleMapsCompatible_Level8/{z}/{y}/{x}.jpeg', {
-    //     crossOrigin: 'Anonymous',
-    //     attribution: 'NASA',
-    // }).addTo(map);
-
     //onMapDrag();
     //onZoomEnd();
+    rainLayer();
     onClick();
 }
 
@@ -53,63 +49,24 @@ function onMapDrag() {
         geo['lat'] = center.lat;
         geo['lng'] = center.lng;
 
+        console.log('dragEnd: ' + center);
     });
 };
 
 function onZoomEnd() {
     map.on('zoomend', function (event) {
+        console.log('zoom');
     });
 }
 
 function onClick() {
     map.on('click', function(e) {
-
         geo['lat'] = e.latlng.lat;
         geo['lng'] = e.latlng.lng;
 
         $('#lat_hidden').val(geo['lat']);
         $('#lng_hidden').val(geo['lng']);
         getData();
-    });
-}
-
-function getPrecipitation() {
-    L.tileLayer('https://gibs-c.earthdata.nasa.gov/wmts/epsg4326/best/wmts.cgi?TIME=2015-01-01&layer=GMI_Snow_Rate_Dsc&style=default&tilematrixset=2km&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fpng&TileMatrix={z}&TileCol={y}&TileRow={x}', {
-        crossOrigin: 'Anonymous',
-        attribution: 'NASA',
-    }).addTo(map);
-}
-
-function getData() {
-    var url = 'http://10.10.11.64:8080/GealtyServer/services/CheckPlace';
-    var data = JSON.stringify(geo);
-    $.ajax({
-        type: 'post',
-        url: url,
-        data: data,
-        dataType: 'json',
-        contentType: 'application/json; charset=utf-8',
-        crossDomain: true,
-        beforeSend: function () {
-        },
-        success: function (data, textStatus, jqXHR) {
-            var result = data['data'];
-            if (result == 1) {
-            }
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            console.error(errorThrown);
-        },
-        xhr: function () {
-            var xhr = $.ajaxSettings.xhr();
-            xhr.upload.onprogress = function (evt) {
-                var percent = parseInt(evt.loaded / evt.total * 100);
-            };
-            xhr.upload.onload = function () {
-
-            };
-            return xhr;
-        }
     });
 }
 
@@ -171,7 +128,6 @@ function rainLayer(){
 
     }
 
-
     var array = []
     var baseLayers = {};
     for(var i = 0; i < mes; i++){
@@ -203,15 +159,48 @@ function rainLayer(){
         baseLayers[today] = array[i];
     }
 
-
     L.control.layers(baseLayers).addTo(map);
-
-    /*
-     L.marker([41.6563497, -0.8765662]).addTo(map)
-     .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
-     .openPopup();*/
 }
 
+$('#activeModal').on('contextmenu', function() {
+    $('#myModal').modal('show');
+    return false;
+});
+
+/* Ajax function  */
+
+function getData() {
+    var url = 'http://10.10.11.64:8080/GealtyServer/services/CheckPlace';
+    var data = JSON.stringify(geo);
+    $.ajax({
+        type: 'post',
+        url: url,
+        data: data,
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        crossDomain: true,
+        beforeSend: function () {
+        },
+        success: function (data, textStatus, jqXHR) {
+            var result = data['data'];
+            if (result == 1) {
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.error(errorThrown);
+        },
+        xhr: function () {
+            var xhr = $.ajaxSettings.xhr();
+            xhr.upload.onprogress = function (evt) {
+                var percent = parseInt(evt.loaded / evt.total * 100);
+            };
+            xhr.upload.onload = function () {
+
+            };
+            return xhr;
+        }
+    });
+}
 
 function sendSeedAndSearch(save){
     var lat = $('#lat_hidden').val();
@@ -256,7 +245,3 @@ function sendSeedAndSearch(save){
         }
     });
 }
-
-$('#activeModal').on('dblclick', function() {
-    $('#myModal').modal('show');
-});
