@@ -260,3 +260,56 @@ function sendSeedAndSearch(save){
         }
     });
 }
+
+function getSeeds(){
+    //diferentes iconos
+    var fresa = L.icon({
+        iconUrl: '/images/fresa.png',
+        iconSize:     [38, 65], // size of the icon
+        shadowSize:   [50, 50], // size of the shadow
+        iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+        shadowAnchor: [4, 62],  // the same for the shadow
+        popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+    });
+    var platano = L.icon({
+        iconUrl: '/images/banana.png',
+        iconSize:     [38, 65], // size of the icon
+        shadowSize:   [50, 50], // size of the shadow
+        iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+        shadowAnchor: [4, 62],  // the same for the shadow
+        popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+    });
+
+    //array con los puntos de prueba
+    var markers = [
+            {lng: -0.41748046875000006, lat: 42.12267315117256,  id: 1, ciudad:"Huesca" },
+            {lng: -3.7023925781250004,  lat: 40.38839687388361,  id: 0, ciudad:"Madrid" },
+            {lng: -0.1279688,           lat: 41.409775832009565, id: 1, ciudad:"Nelson's Column<br><a href=\"https://en.wikipedia.org/wiki/Nelson's_Column\">wp</a>" },
+            {lng: -0.1244324,           lat: 51.5006728,         id: 1, ciudad:"Barcelona" },
+            {lng: -0.119623,            lat: 51.503308,          id: 0, ciudad: "London Eye" },
+            {lng: -0.1279688,           lat: 51.5077286,         id: 1, ciudad: "Nelson's Column<br><a href=\"https://en.wikipedia.org/wiki/Nelson's_Column\">wp</a>" },
+            {lng: -0.8679199218750001,  lat: 41.623655390686395, id: 0, ciudad:"Zaragoza" },
+            {lng: -3.6062622070312504,  lat: 37.17782559332976,  id: 1, ciudad:"Granad" },
+            {lng: -5.987548828125001,   lat: 37.37888785004527,  id: 0, ciudad:"Sevilla" }
+
+    ];
+
+    //Montamos todos los puntos
+    for (var i=0; i<markers.length; i++) {
+        var marker = "";
+        var lon = markers[i].lat;
+        var lat = markers[i].lng;
+        var popupText = markers[i].ciudad;
+
+        var markerLocation = new L.LatLng(lat, lon);
+        if(markers[i].id == 0){
+            marker = new L.Marker(markerLocation, {icon: fresa});
+        }else{
+            marker = new L.Marker(markerLocation, {icon: platano});
+        }
+        map.addLayer(marker);
+
+        marker.bindPopup(popupText);
+
+    }
+}
