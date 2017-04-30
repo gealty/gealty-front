@@ -45,6 +45,7 @@ function initMap() {
 
     //onMapDrag();
     //onZoomEnd();
+    onClick();
 }
 
 function onMapDrag() {
@@ -63,6 +64,15 @@ function onZoomEnd() {
     });
 }
 
+function onClick() {
+    map.on('click', function(e) {
+        geo['lat'] = e.latlng.lat;
+        geo['lng'] = e.latlng.lng;
+
+        getData();
+    });
+}
+
 function getPrecipitation() {
     L.tileLayer('https://gibs-c.earthdata.nasa.gov/wmts/epsg4326/best/wmts.cgi?TIME=2015-01-01&layer=GMI_Snow_Rate_Dsc&style=default&tilematrixset=2km&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fpng&TileMatrix={z}&TileCol={y}&TileRow={x}', {
         crossOrigin: 'Anonymous',
@@ -70,23 +80,25 @@ function getPrecipitation() {
     }).addTo(map);
 }
 
-function getData(object, filter) {
-    var seed = '';
-    var uniqueKey = '';
+function getData() {
+    var url = 'http://10.10.11.64:8080/GealtyServer/services/CheckPlace';
+    var data = JSON.stringify(geo);
 
     $.ajax({
         type: 'post',
-        url: $(this).attr('action'),
-        data: formData,
+        url: url,
+        data: data,
         dataType: 'json',
         cache: false,
-        contentType: false,
+        contentType: 'application/json; charset=utf-8',
+        crossDomain: true,
         processData: false,
         beforeSend: function () {
             console.log('init');
         },
         success: function (data, textStatus, jqXHR) {
             var result = data['data'];
+            console.log(result);
             if (result == 1) {
             }
         },
