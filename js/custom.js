@@ -223,28 +223,58 @@ function sendSeedAndSearch(save){
     var url = 'http://10.10.11.64:8080/GealtyServer/services/CheckPlace';
 
     var geo = {
-        "lat": lat,
-        "lng": long,
+        "lat": lat.toString(),
+        "lng": long.toString(),
         "seed": $('#search').val(),
         "save": save
     }
+
+    var data = JSON.stringify(geo);
 
     console.log(geo);
     $.ajax({
         type: 'post',
         url: url,
-        data: geo,
+        data: data,
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
         crossDomain: true,
         beforeSend: function () {
         },
         success: function (data, textStatus, jqXHR) {
-        console.log(data)
-            if (data == "OK") {
-                $('#sendSeed').prop( "disabled", true );
-            }else{
+            console.log(data)
+            if (data['result'] == "OK") {
                 $('#sendSeed').prop( "disabled", false );
+
+                var humidity= data['weather']['humidity'];
+                var tempMax= data['weather']['tempMax'];
+                var tempMin= data['weather']['tempMin'];
+                var speed= data['weather']['windSpeed'];
+                $('#result').empty()
+                    .append('<h3>Resultados obtenidos</h3>')
+                    .append('<p>Humedad: ' + humidity + ' %</p>')
+                    .append('<p>Temp. Máxima: ' + tempMax + 'ºC</p>')
+                    .append('<p>Temp. Mínima: ' + tempMin + 'ºC</p>')
+                    .append('<p>Velocidad del viento: ' + speed + ' m/s</p>');
+
+                var seedMinHumidity= data['seed']['mintHumidity'];
+                var seedMaxHumidity= data['seed']['maxtHumidity'];
+                var seedTempMax= data['seed']['maxTemp'];
+                var seedTempMin= data['seed']['minTemp'];
+                var seedSpeed= data['seed']['maxWindSpeed'];
+                var seedStudy= data['seed']['study'];
+                $('#resultSeed').empty()
+                    .append('<h3>Resultados óptimos</h3>')
+                    .append('<p>Humedad mínima: ' + seedMinHumidity + ' %</p>')
+                    .append('<p>Humedad máxima: ' + seedMaxHumidity + ' %</p>')
+                    .append('<p>Temp. Máxima: ' + seedTempMax + 'ºC</p>')
+                    .append('<p>Temp. Mínima: ' + seedTempMin + 'ºC</p>')
+                    .append('<p>Velocidad del viento: ' + seedSpeed + ' m/s</p>')
+                    .append('<h2>' + seedStudy + '</h2>');
+            }else{
+                $('#result').empty();
+                $('#resultSeed').empty();
+                $('#sendSeed').prop( "disabled", true );
             }
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -284,7 +314,7 @@ function getSeeds(){
 
     //array con los puntos de prueba
     var markers = [
-            {lng: -0.41748046875000006, lat: 42.12267315117256,  id: 1, ciudad: "Huesca" },
+            {lng: -0.41748046875000006 , lat: 42.12267315117256,  id: 1, ciudad: "Huesca" },
             {lng: -3.7023925781250004,  lat: 40.38839687388361,  id: 0, ciudad: "Madrid" },
             {lng: -0.1279688,           lat: 41.409775832009565, id: 1, ciudad: "Nelson's Column<br><a href=\"https://en.wikipedia.org/wiki/Nelson's_Column\">wp</a>" },
             {lng: 2.1423339843750004,   lat: 41.409775832009565, id: 1, ciudad: "Barcelona" },
@@ -299,8 +329,8 @@ function getSeeds(){
     //Montamos todos los puntos
     for (var i=0; i<markers.length; i++) {
         var marker = "";
-        var lon = markers[i].lat;
-        var lat = markers[i].lng;
+        var lon = markers[i].lng;
+        var lat = markers[i].lat;
         var popupText = markers[i].ciudad;
 
         var markerLocation = new L.LatLng(lat, lon);

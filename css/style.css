@@ -72,3 +72,6 @@ header{
     height: 100%;
     padding: 0 40px;
 }
+#result {
+    margin: 20px 0;
+}
