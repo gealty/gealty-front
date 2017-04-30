@@ -20,10 +20,16 @@
     <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"
             integrity="sha512-A7vV8IFfih/D732iSSKi20u/ooOfj/AGehOKq0f4vLT1Zr2Y+RX7C+w8A1gaSasGtRUZpF/NZgzSAu4/Gc41Lg=="
             crossorigin=""></script>
+    <script src="https://rawgithub.com/mylen/leaflet.TileLayer.WMTS/master/leaflet-tilelayer-wmts.js"></script>
 </head>
 <body>
     <header>
-        <p>Template</p>
+        <div class="col-sm-2 pull-right">
+            <select class="form-control" style="margin-top:7px" id="date">
+                <option value="1">1 Mes</option>
+            </select>
+        </div>
+
     </header>
 
     <div id="map" class="container-fluid"></div>
