@@ -1,15 +1,65 @@
-html{
+html {
     height: 100%;
 }
-
-body{
+body {
     height: 100%;
 }
-
+#map {
+    height: calc(100vh - 55px);
+}
+/* Header */
 header{
-    height: 50px;
+    height: 55px;
+    position: relative;
+    z-index: 9999;
+    font-size: 14px;
 }
-
-#map{
-   height: calc(100vh - 50px);
+.navbar {
+    padding: 0;
+    margin: 0;
+}
+.navbar-default {
+    background-color: #FFFFFF !important;
+    background-image: none !important;
+    border-color: #FFFFFF !important;
+    box-shadow: none !important;
+}
+/* Buttons */
+.buttons-menu {
+    position: fixed;
+    z-index: 9999;
+}
+.buttons-menu a span {
+    width: 40px;
+    height: 40px;
+    padding: 12px;
+    background: #616161;
+    display: block;
+    font-size: 18px;
+    text-decoration: none;
+    color: #FFFFFF;
+    border-radius: 5px;
+}
+.buttons-menu span:hover {
+    background: #DD4B39;
+}
+.buttons-menu span:active,
+.buttons-menu span:focus {
+    background: #616161;
+}
+.buttons-menu a:hover,
+.buttons-menu a:focus {
+    text-decoration: none;
+}
+.help{
+    bottom: 120px;
+    right: 10px;
+}
+.closest-point{
+    bottom: 75px;
+    right: 10px;
+}
+.geo{
+    bottom: 30px;
+    right: 10px;
 }

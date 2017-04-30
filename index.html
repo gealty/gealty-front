@@ -11,9 +11,9 @@
     <meta name="keywords" content=""/>
     <meta name="description" content=""/>
     <!-- Librerías CSS -->
-    <link type="text/css" href="/assets/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet"/>
-    <link type="text/css" href="/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
-    <link type="text/css" href="/css/style.css" rel="stylesheet"/>
+    <link type="text/css" href="assets/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet"/>
+    <link type="text/css" href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+    <link type="text/css" href="css/style.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css"
           integrity="sha512-07I2e+7D8p6he1SIM+1twR5TIrhUQn9+I6yjqD53JQjFiMf8EtC93ty0/5vJTZGF8aAocvHYNEDJajGdNx1IsQ=="
           crossorigin=""/>
@@ -24,18 +24,90 @@
 </head>
 <body>
     <header>
-        <div class="col-sm-2 pull-right">
-            <select class="form-control" style="margin-top:7px" id="date">
-                <option value="1">1 Mes</option>
-            </select>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <nav class="navbar navbar-default" role="navigation">
+                        <div class="container-fluid">
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                                    <span class="sr-only">Desplegar navegación</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <a class="navbar-brand" href="/"><i class="glyphicon glyphicon-tree-deciduous"></i> <b>GEALTY!</b></a>
+                            </div>
+                            <div class="collapse navbar-collapse navbar-right">
+                                <form class="navbar-form navbar-left" role="search">
+                                    <div class="form-group">
+                                        <div id="pais" class="input-group">
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                                            <select id="date" name="year" required="required" class="form-control">
+                                                <option value="1">1 mes</option>
+                                                <!--<option value="3">3 meses</option>
+                                                <option value="6">6 meses</option>-->
+                                            </select>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
         </div>
-
     </header>
 
-    <div id="map" class="container-fluid"></div>
+    <div id="map" class="container-fluid">
+        <div id="activeModal" class="container absolute" style="height: 100%">hola soy pedro</div>
+    </div>
 
-    <script type="text/javascript" src="/assets/jquery/jquery.min.js"></script>
-    <script type="text/javascript" src="/assets/bootstrap/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/js/custom.js"></script>
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">¿Qué quieres cultivar?</h4>
+                </div>
+                <div class="modal-body">
+                    <input type="search" id="search" onchange="sendSeedAndSearch(false)" class="input-sm"/>
+                </div>
+                <div class="modal-footer">
+                    <button disabled id="sendSeed" type="button" class="btn btn-success" data-dismiss="modal" onclick="sendSeedAndSearch(true)">CULTIVAR</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <input id="lat_hidden" type="hidden"/>
+    <input id="lng_hidden" type="hidden"/>
+
+    <!-- Button help -->
+    <div id='help' class="buttons-menu help">
+        <a href='#' rel="nofollow" title="Ayuda"><span class="glyphicon glyphicon-question-sign"></span></a>
+    </div>
+
+    <!-- Button closest point -->
+    <div id='water' class="buttons-menu closest-point">
+        <a href='#' rel="nofollow" title="Punto más cercano"><span class="glyphicon glyphicon-tint"></span></a>
+    </div>
+
+    <!-- Button geo -->
+    <div id='geo' class="buttons-menu geo">
+        <a href='#' rel="nofollow" title="Geolocalización"><span class="glyphicon glyphicon-screenshot"></span></a>
+    </div>
+
+    <!-- Librerías JS -->
+    <script type="text/javascript" src="assets/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"
+            integrity="sha512-A7vV8IFfih/D732iSSKi20u/ooOfj/AGehOKq0f4vLT1Zr2Y+RX7C+w8A1gaSasGtRUZpF/NZgzSAu4/Gc41Lg=="
+            crossorigin=""></script>
+    <script type="text/javascript" src="http://maps.stamen.com/js/tile.stamen.js?v1.3.0"></script>
+    <script type="text/javascript" src="js/custom.js"></script>
 </body>
 </html>
+
