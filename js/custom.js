@@ -226,7 +226,7 @@ function sendSeedAndSearch(save){
         "lat": lat,
         "lng": long,
         "seed": $('#search').val(),
-        "save": save,
+        "save": save
     }
 
     console.log(geo);
