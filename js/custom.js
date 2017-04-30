@@ -40,7 +40,8 @@ function initMap() {
     //onMapDrag();
     //onZoomEnd();
     rainLayer();
-    onClick();
+    //onClick();
+    onContextMenu();
 }
 
 function onMapDrag() {
@@ -66,7 +67,21 @@ function onClick() {
 
         $('#lat_hidden').val(geo['lat']);
         $('#lng_hidden').val(geo['lng']);
-        getData();
+
+        console.log(geo);
+    });
+}
+
+function onContextMenu(){
+    map.on('contextmenu', function(e) {
+        alert('Test');
+        geo['lat'] = e.latlng.lat;
+        geo['lng'] = e.latlng.lng;
+
+        $('#lat_hidden').val(geo['lat']);
+        $('#lng_hidden').val(geo['lng']);
+
+        console.log(geo);
     });
 }
 
@@ -182,7 +197,7 @@ function getData() {
         beforeSend: function () {
         },
         success: function (data, textStatus, jqXHR) {
-            var result = data['data'];
+            var result = data;
             if (result == 1) {
             }
         },
@@ -227,9 +242,9 @@ function sendSeedAndSearch(save){
         success: function (data, textStatus, jqXHR) {
         console.log(data)
             if (data == "OK") {
-                $('#sendSeed').prop( "disabled", false );
-            }else{
                 $('#sendSeed').prop( "disabled", true );
+            }else{
+                $('#sendSeed').prop( "disabled", false );
             }
         },
         error: function (jqXHR, textStatus, errorThrown) {
