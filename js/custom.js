@@ -214,6 +214,7 @@ function sendSeedAndSearch(save){
         "save": save,
     }
 
+    console.log(geo);
     $.ajax({
         type: 'post',
         url: url,
@@ -223,7 +224,8 @@ function sendSeedAndSearch(save){
         crossDomain: true,
         beforeSend: function () {
         },
-        success: function (data, textStatus, jqXHR) {;
+        success: function (data, textStatus, jqXHR) {
+        console.log(data)
             if (data == "OK") {
                 $('#sendSeed').prop( "disabled", false );
             }else{
